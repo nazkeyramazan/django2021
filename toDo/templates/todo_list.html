@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header> BFDDjango ToDo </header>
+
+<button> Add Task </button>
+
+<table>
+    <tr>
+        <th>Task</th>
+        <th>Created</th>
+        <th>Due on</th>
+        <th>Owner</th>
+        <th>Mark</th>
+    </tr>
+     {% for task in context %}
+        {% if task.mark%}
+            <tr>
+            <td>{{ task.task }}</td>
+            <td>{{ task.created }}</td>
+            <td>{{ task.due_on }}</td>
+            <td>{{ task.owner }}</td>
+            <td>Done</td>
+            </tr>
+        {% endif %}
+
+    {% endfor %}
+</table>
+<button > <a href="http://127.0.0.1:8000/todos/1/completed/">View completed tasks </a> </button>
+<button> Delete this list </button>
+</body>
+</html>
