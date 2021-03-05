@@ -1,0 +1,24 @@
+
+ {% extends 'basis.html' %}
+{% block content %}
+<table>
+    <tr>
+        <th>Task</th>
+        <th>Created</th>
+        <th>Due on</th>
+        <th>Owner</th>
+        <th>Mark</th>
+    </tr>
+    {% for task in tasks %}
+
+            <td>{{ task.task }}</td>
+            <td>{{ task.created }}</td>
+            <td>{{ task.due_on }}</td>
+            <td>{{ task.owner }}</td>
+            <td>{{task.mark}}</td>
+            </tr>
+
+    {% endfor %}
+</table>
+<button> <a href="http://127.0.0.1:8000/todos/{{ list.id }}/"> View Incompleted tasks </a> </button>
+{% endblock %}

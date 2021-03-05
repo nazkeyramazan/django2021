@@ -1,0 +1,24 @@
+{% extends 'basis.html' %}
+{% block content %}
+{#    <table >#}
+{#    <tr>#}
+{#        <th >#}
+{#    List of To-Do#}
+{#        </th>#}
+{#   </tr>#}
+{#    </table>#}
+    <table >
+        <tr >
+            <th  >List ID </th>
+            <th> List name</th>
+        </tr>
+
+	{% for tasklist in list %}
+        <tr>
+            <td>{{ tasklist.id }}</td>
+            <td> {{ tasklist.name }}</td>
+       </tr>
+       {% endfor%}
+
+</table>
+{% endblock %}
