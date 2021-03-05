@@ -1,12 +1,14 @@
- {% extends 'basis.html' %}
+
+{% extends 'basis.html' %}
 {% block content %}
 <table>
     <tr>
         <th>Task</th>
-        <th>Created</th>
-        <th>Due on</th>
+        <th class="datetime">Created</th>
+        <th class="datetime">Due on</th>
         <th>Owner</th>
         <th>Mark</th>
+        <th>List Name</th>
     </tr>
      {% for task in tasks %}
 {#        {% if task.mark%}#}
@@ -16,6 +18,7 @@
             <td>{{ task.due_on }}</td>
             <td>{{ task.owner }}</td>
             <td>{{task.mark}}</td>
+            <td>{{ list.name }}</td>
             </tr>
 {#        {% endif %}#}
 

@@ -3,9 +3,18 @@ button{
 }
 
 .red{
-    background-color: red;
+    background-color: #ff0010;
 }
 
 .blue{
     background-color: blue;
 }
+/*table*/
+/*{*/
+/*    width:100%;*/
+/*    border:4px solid gray;*/
+/*    padding:2px;*/
+/*}*/
+/*datetime{*/
+/*    width: 150px;*/
+/*}*/
