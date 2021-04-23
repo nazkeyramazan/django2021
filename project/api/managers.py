@@ -1,7 +1,6 @@
 from django.db import models
 
 class BookManager(models.Manager):
-
     def get_by_author_with_relation(self, author_id):
         return self.get_related().filter(author_id=author_id)
 
@@ -11,8 +10,10 @@ class BookManager(models.Manager):
     def get_related(self):
         return self.select_related('author', 'publisher')
 
+class AuthorManager(models.Manager):
+    def get_author_by_name(self , fisrt_name):
+        return self.filter(first_name = fisrt_name )
 class PublisherManager(models.Manager):
-
     def get_publicher_from_kz(self):
         return self.filter(coutry = "Kazakhstan")
 
