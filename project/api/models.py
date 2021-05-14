@@ -28,11 +28,11 @@ class BookCategory(models.Model):
         verbose_name_plural="Book categories"
 
 class Publisher(models.Model):
-    name = models.CharField(max_length=255 , verbose_name="Publisher name"),
-    address = models.CharField(max_length=255 , verbose_name="Publisher address"),
-    city = models.CharField(max_length=255 , verbose_name="Publisher city")
-    country = models.CharField(max_length=255 , verbose_name="Publisher country")
-    object  = PublisherManager()
+    name = models.CharField(max_length=255 ,null=True, blank=True, verbose_name="Publisher name"),
+    address = models.CharField(max_length=255 ,null=True, blank=True, verbose_name="Publisher address"),
+    city = models.CharField(max_length=255 ,null=True, blank=True, verbose_name="Publisher city")
+    country = models.CharField(max_length=255 , null=True, blank=True,verbose_name="Publisher country")
+    objects  = PublisherManager()
     def __str__(self):
         return self.name
 
@@ -44,7 +44,9 @@ class Author(models.Model):
     first_name = models.CharField(max_length=255, null=True, blank=True, verbose_name='Name')
     last_name = models.CharField(max_length=255, null=True, blank=True, verbose_name='Surname')
     email = models.CharField(max_length=255, null=True, blank=True, verbose_name='Email')
-    object = AuthorManager()
+    objects = AuthorManager()
+    def __str__(self):
+        return self.first_name
     class Meta:
         verbose_name = 'Author'
         verbose_name_plural = 'Authors'
@@ -59,7 +61,7 @@ class Book(models.Model):
     def __str__(self):
         return self.name
 
-    object = BookManager()
+    objects = BookManager()
 
     class Meta:
         verbose_name="Book"
@@ -69,7 +71,7 @@ class BookDetail(Book):
     genre = models.CharField(max_length=255, verbose_name="Book genre"),
     num_pages = models.IntegerField()
 
-    object = BookDetailManager()
+    objects = BookDetailManager()
 
     def __str__(self):
         return self.name
