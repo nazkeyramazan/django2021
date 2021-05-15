@@ -1,3 +1,5 @@
+import logging
+
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -5,6 +7,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import IsAdminUser
 from api.models import MainCategory , BookCategory
 from api.serializers import MainCategorySerializer ,BookCategorySerializer
+
+logger = logging.getLogger(__name__)
 
 @api_view(['GET', 'POST'])
 def main_category_list(request):
@@ -17,6 +21,8 @@ def main_category_list(request):
         serializer = MainCategorySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            logger.debug(f'Created Main Category with name: {serializer.instance}')
+            logger.info(f'Created Main Category with name : {serializer.instance}')
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response({'Error :(': serializer.errors},
                         status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -36,12 +42,15 @@ def main_category_detail(request, main_category_id):
         serializer = MainCategorySerializer(instance=main_category, data=request.data)
         if serializer.is_valid():
             serializer.save()
-
+            logger.debug(f'Updated Main Category with name: {serializer.instance}')
+            logger.info(f'Updated Main Category with name : {serializer.instance}')
             return Response(serializer.data)
         return Response({'error': serializer.errors})
 
     elif request.method == 'DELETE':
         main_category.delete()
+        logger.debug(f'Deleted Main Category with name: {main_category.name}')
+        logger.info(f'Deleted Main Category with name : {main_category.name}')
         return Response({'Main category item deleted': True})
 
 @api_view(['GET', 'POST'])

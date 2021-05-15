@@ -4,6 +4,9 @@ from django.contrib.auth.models import PermissionsMixin
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.base_user import  BaseUserManager
 from utils.constants import USER_ROLES , USER_CUSTOMER
+from utils.validators import validate_size, validate_extension
+from django.core.validators import EmailValidator , MinLengthValidator
+
 class MainUserManager(BaseUserManager):
     use_in_migrations = True
 
@@ -32,13 +35,12 @@ class MainUserManager(BaseUserManager):
 
         return self._create_user(email, password, **extra_fields)
 class MainUser(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(_('email address'), unique=True)
+    email = models.EmailField(_('email address'), unique=True , validators=[EmailValidator])
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=30, blank=True)
     date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
-    # is_active = models.BooleanField(_('active'), default=True)
-    # is_staff = models.BooleanField(_('is_staff'), default=False)
-    # avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
+    is_active = models.BooleanField(_('active'), default=True)
+    is_staff = models.BooleanField(_('is_staff'), default=False)
     role = models.SmallIntegerField(choices=USER_ROLES, default=USER_CUSTOMER)
 
     objects = MainUserManager()
@@ -49,12 +51,14 @@ class MainUser(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = _('Main_User')
         verbose_name_plural = _('Main_Users')
-
+    def __str__(self):
+        return self.email
 class Profile(models.Model):
     bio = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)
     birth_date = models.DateField(null=True, blank=True)
-    user = models.OneToOneField(MainUser, on_delete=models.CASCADE)
+    avatar = models.ImageField(upload_to='avatars',validators=[validate_size, validate_extension], null=True, blank=True)
+    user = models.OneToOneField(MainUser, on_delete=models.CASCADE , primary_key=True)
 
     class Meta:
         verbose_name = 'Profile'
